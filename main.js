@@ -187,7 +187,7 @@ require([
         const goToButton = document.createElement("button");
         goToButton.innerText = "Zoom to earthquake";
         goToButton.addEventListener("click", function() {
-          view.goTo({ target: earthquake, zoom: 5 });
+          view.goTo({ target: earthquake, zoom: 5 }, { speedFactor: 0.5 });
           if (earthquakeLayerView) {
             if (highlightHandler) {
               highlightHandler.remove();
