@@ -223,7 +223,7 @@ require([
   view.when(function() {
     view.constraints.clipDistance.far = 50000000;
     watchUtils.whenFalseOnce(view, "updating", function() {
-      //      rotate();
+      rotate();
     });
   });
 });
