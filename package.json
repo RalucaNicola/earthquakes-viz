@@ -1,0 +1,25 @@
+{
+  "name": "earthquakes-viz",
+  "version": "1.0.0",
+  "description": "A visualization of earthquakes with exaggerated depth",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RalucaNicola/earthquakes-viz.git"
+  },
+  "keywords": [
+    "3D",
+    "earthquakes",
+    "javascript",
+    "depth"
+  ],
+  "author": "Raluca Nicola",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RalucaNicola/earthquakes-viz/issues"
+  },
+  "homepage": "https://github.com/RalucaNicola/earthquakes-viz#readme"
+}
