@@ -65,7 +65,7 @@ require([
 
   // define the earthquakes layer
   const earthquakeLayer = new CSVLayer({
-    url: "./earthquakes_2019.csv",
+    url: "./earthquake_data.csv",
     elevationInfo: exaggeratedElevation,
     screenSizePerspectiveEnabled: false,
     renderer: {
@@ -229,7 +229,7 @@ require([
   }
 
   view.when(function() {
-    view.constraints.clipDistance.far = 50000000;
+    view.constraints.clipDistance.far = 40000000;
     watchUtils.whenFalseOnce(view, "updating", function() {
       rotate();
     });
