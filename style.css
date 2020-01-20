@@ -26,12 +26,13 @@ body {
 
 #details {
   position: absolute;
-  bottom: 20px;
-  left: 10px;
-  right: 10px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   font-size: 0.9em;
   line-height: 1.5em;
-  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 #details button {
@@ -100,10 +101,4 @@ a {
 
 #earthquake-list h3 {
   margin: 0.1em;
-}
-
-.esri-attribution {
-  color: white;
-  background-color: rgba(0, 0, 0, 0.3);
-  font-size: 0.8em;
 }

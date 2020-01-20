@@ -28,12 +28,23 @@ require([
       starsEnabled: false,
       atmosphereEnabled: false
     },
+    ui: {
+      components: []
+    },
     highlightOptions: {
       color: "white"
+    },
+    padding: {
+      bottom: 200
+    },
+    popup: {
+      collapseEnabled: false,
+      dockEnabled: false,
+      dockOptions: {
+        breakpoint: false
+      }
     }
   });
-
-  view.ui.empty("top-left");
 
   const exaggeratedElevation = {
     mode: "absolute-height",
@@ -45,9 +56,6 @@ require([
 
   const realElevation = {
     mode: "absolute-height",
-    featureExpressionInfo: {
-      expression: 0
-    },
     unit: "kilometers"
   };
   let exaggerated = true;
@@ -55,11 +63,8 @@ require([
   // define the earthquakes layer
   const earthquakeLayer = new CSVLayer({
     url: "./earthquakes_2019.csv",
-    copyright: `Original
-    data from <a href="https://earthquake.usgs.gov/earthquakes/feed/">USGS</a>. Made by
-    <a href="https://twitter.com/nicolaraluk">Raluca</a> with
-    <a href="https://developers.arcgis.com/javascript">ArcGIS API for JavaScript</a>.`,
     elevationInfo: exaggeratedElevation,
+    screenSizePerspectiveEnabled: false,
     renderer: {
       type: "simple",
       symbol: {
@@ -225,5 +230,14 @@ require([
     watchUtils.whenFalseOnce(view, "updating", function() {
       rotate();
     });
+  });
+
+  let legendVisible = true;
+  const legendController = document.getElementById("legend-control");
+  const legendContainer = document.getElementById("legend");
+  legendController.addEventListener("click", function() {
+    legendContainer.style.display = legendVisible ? "none" : "block";
+    legendController.innerHTML = legendVisible ? "Show explanation" : "Hide explanation";
+    legendVisible = !legendVisible;
   });
 });
