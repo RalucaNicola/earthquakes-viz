@@ -56,6 +56,9 @@ require([
 
   const realElevation = {
     mode: "absolute-height",
+    featureExpressionInfo: {
+      expression: "-$feature.depth"
+    },
     unit: "kilometers"
   };
   let exaggerated = true;
@@ -150,7 +153,7 @@ require([
             type: "fill",
             outline: {
               color: [255, 255, 255],
-              size: 0.75
+              size: 1.5
             }
           }
         ]
