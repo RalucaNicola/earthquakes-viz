@@ -3,14 +3,56 @@ require([
   "esri/views/SceneView",
   "esri/layers/CSVLayer",
   "esri/layers/FeatureLayer",
+  "esri/Basemap",
   "esri/core/watchUtils"
-], function(Map, SceneView, CSVLayer, FeatureLayer, watchUtils) {
-  // define an empty map to store the country boundaries
-  // and earthquake layers
+], function(Map, SceneView, CSVLayer, FeatureLayer, Basemap, watchUtils) {
+  const countryBorders = new FeatureLayer({
+    url:
+      "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Countries_(Generalized)/FeatureServer/0",
+    renderer: {
+      type: "simple",
+      symbol: {
+        type: "polygon-3d",
+        symbolLayers: [
+          {
+            type: "fill",
+            outline: {
+              color: [255, 255, 255, 0.8],
+              size: 1
+            }
+          }
+        ]
+      }
+    }
+  });
+
+  const plateTectonicBorders = new FeatureLayer({
+    url: "https://services2.arcgis.com/cFEFS0EWrhfDeVw9/arcgis/rest/services/plate_tectonics_boundaries/FeatureServer",
+    elevationInfo: {
+      mode: "on-the-ground"
+    },
+    renderer: {
+      type: "simple",
+      symbol: {
+        type: "line-3d",
+        symbolLayers: [
+          {
+            type: "line",
+            material: { color: [255, 133, 125, 0.7] },
+            size: 3
+          }
+        ]
+      }
+    }
+  });
+
   const map = new Map({
     ground: {
       opacity: 0
-    }
+    },
+    basemap: new Basemap({
+      baseLayers: [countryBorders, plateTectonicBorders]
+    })
   });
 
   // the view associated with the map has a transparent background
@@ -49,7 +91,7 @@ require([
   const exaggeratedElevation = {
     mode: "absolute-height",
     featureExpressionInfo: {
-      expression: "-$feature.depth * 8"
+      expression: "-$feature.depth * 6"
     },
     unit: "kilometers"
   };
@@ -74,8 +116,14 @@ require([
         type: "point-3d",
         symbolLayers: [
           {
-            type: "icon",
-            resource: { primitive: "circle" }
+            type: "object",
+            resource: {
+              primitive: "sphere"
+            },
+            material: { color: [255, 250, 239, 0.8] },
+            depth: 10000,
+            height: 10000,
+            width: 10000
           }
         ]
       },
@@ -83,12 +131,10 @@ require([
         {
           type: "size",
           field: "mag",
-          legendOptions: {
-            title: "Magnitude"
-          },
+          axis: "all",
           stops: [
-            { value: 6, size: "3px", label: "4.5 - 6" },
-            { value: 7, size: "25px", label: ">7" }
+            { value: 5.5, size: 70000, label: "<15%" },
+            { value: 7, size: 250000, label: "25%" }
           ]
         },
         {
@@ -141,28 +187,6 @@ require([
     earthquakeLayerView = lyrView;
   });
 
-  const countryBorders = new FeatureLayer({
-    url:
-      "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Countries_(Generalized)/FeatureServer/0",
-    renderer: {
-      type: "simple",
-      symbol: {
-        type: "polygon-3d",
-        symbolLayers: [
-          {
-            type: "fill",
-            outline: {
-              color: [255, 255, 255],
-              size: 1.5
-            }
-          }
-        ]
-      }
-    }
-  });
-
-  map.add(countryBorders);
-
   function formatDate(date) {
     const fDate = new Date(date);
     const year = fDate.getFullYear();
@@ -195,7 +219,7 @@ require([
         const goToButton = document.createElement("button");
         goToButton.innerText = "Zoom to earthquake";
         goToButton.addEventListener("click", function() {
-          view.goTo({ target: earthquake, zoom: 5 }, { speedFactor: 0.5 });
+          view.goTo({ target: earthquake, zoom: 7 }, { speedFactor: 0.5 });
           if (earthquakeLayerView) {
             if (highlightHandler) {
               highlightHandler.remove();

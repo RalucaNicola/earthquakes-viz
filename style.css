@@ -71,6 +71,13 @@ body {
   vertical-align: sub;
 }
 
+.orange-line {
+  display: inline-block;
+  width: 50px;
+  height: 5px;
+  background-color: rgba(255, 133, 125, 0.7);
+}
+
 ul {
   list-style: none;
 }
