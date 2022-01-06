@@ -48,7 +48,8 @@ require([
 
   const map = new Map({
     ground: {
-      opacity: 0
+      opacity: 0,
+      navigationConstraint: "none"
     },
     basemap: new Basemap({
       baseLayers: [countryBorders, plateTectonicBorders]
@@ -74,7 +75,7 @@ require([
       components: []
     },
     highlightOptions: {
-      color: "white"
+      color: "cyan"
     },
     padding: {
       bottom: 200
@@ -85,6 +86,15 @@ require([
       dockOptions: {
         breakpoint: false
       }
+    },
+    camera: {
+      position: [
+        -105.61273180,
+        3.20596275,
+        13086004.69753
+      ],
+      heading: 0.24,
+      tilt: 0.16
     }
   });
 
@@ -198,6 +208,7 @@ require([
     return `${day} ${month} ${year}, at ${hours}:${prefix}${minutes}`;
   }
 
+  let zooming = false;
   earthquakeLayer
     .queryFeatures({
       where: "mag > 7"
@@ -219,6 +230,7 @@ require([
         const goToButton = document.createElement("button");
         goToButton.innerText = "Zoom to earthquake";
         goToButton.addEventListener("click", function() {
+          zooming = true;
           view.goTo({ target: earthquake, zoom: 4 }, { speedFactor: 0.5 });
           if (earthquakeLayerView) {
             if (highlightHandler) {
@@ -244,7 +256,7 @@ require([
   });
 
   function rotate() {
-    if (!view.interacting) {
+    if (!view.interacting && !zooming) {
       const camera = view.camera.clone();
       camera.position.longitude -= 0.1;
       view.camera = camera;
