@@ -15,7 +15,7 @@ body {
 
 #view-container,
 #view-container canvas {
-  filter: drop-shadow(0 0 10px rgba(255, 243, 131, 0.5));
+  filter: drop-shadow(0 0 20px rgba(255, 243, 131, 0.7));
 }
 
 .title {
@@ -108,4 +108,22 @@ a {
 
 #earthquake-list h3 {
   margin: 0.1em;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: var(--border-radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.8);
 }
